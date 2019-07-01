@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "todo-app",
+  "builds": [
+    { "src": "www/**/*", "use": "@now/static" },
+    { "src": "api/**/*.js", "use": "@now/node" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "www/index.html" },
+    {
+      "src": "/api/(?<api>[^/]+)/(?<param>[^/]+)",
+      "methods": ["POST", "GET", "DELETE", "PUT"],
+      "dest": "api/$api/index.js?param=$param"
+    }
+  ],
+  "env": {
+    "DB_URI": "@db_uri"
+  }
+}
