@@ -9,7 +9,7 @@
     { "src": "/", "dest": "www/index.html" },
     {
       "src": "/api/(?<api>[^/]+)/(?<param>[^/]+)",
-      "methods": ["POST", "GET", "DELETE", "PUT"],
+      "methods": ["POST", "GET", "DELETE", "PATCH"],
       "dest": "api/$api/index.js?param=$param"
     }
   ],

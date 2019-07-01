@@ -9,7 +9,7 @@ module.exports = (req, res) => {
       return createPost(req, res);
     case 'DELETE':
       return deletePost(req, res);
-    case 'PUT':
+    case 'PATCH':
       return amendPost(req, res);
     default:
       res.status(405).json({ msg: 'Method not allowed' });
@@ -43,10 +43,26 @@ const createPost = async (req, res) => {
   });
 };
 
-const deletePost = (req, res) => {
-  return res.json({ msg: 'Delete a post', status: 'Good', method: req.method });
+const deletePost = async (req, res) => {
+  const todoId = req.query.param;
+  const todo = Todo.findById(todoId);
+  await todo.remove();
+  return res.json({ msg: 'Post Deleted' });
 };
 
-const amendPost = (req, res) => {
-  return res.json({ msg: 'Amend a post', status: 'Good', method: req.method });
+const amendPost = async (req, res) => {
+  console.log(req.query.param);
+  console.log(req.body);
+  const todoId = req.query.param;
+  const { description, complete } = req.body;
+  console.log(description, complete);
+  const todo = await Todo.findById(todoId);
+  if (description) {
+    toto.description = description;
+  }
+  if (complete !== undefined) {
+    todo.complete = complete;
+  }
+  await todo.save();
+  return res.json({ todo });
 };
